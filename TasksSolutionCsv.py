@@ -1,14 +1,10 @@
-import csv
 import os
+import csv
 
-# File to store student data
-csv_file = "students.csv"
-
-# Function to load students from CSV
 def load_students():
     students = []
-    if os.path.exists(csv_file):  # Check if the file exists
-        with open(csv_file, mode="r", newline="") as file:
+    if os.path.exists("students.csv"):
+        with open("students.csv", mode="r", newline="") as file:
             reader = csv.DictReader(file)
             for row in reader:
                 student = {
@@ -24,45 +20,37 @@ def load_students():
                 students.append(student)
     return students
 
-# Function to append a new student to the CSV file
 def append_student(student):
-    # Check if the file exists to determine whether to write a header
-    file_exists = os.path.exists(csv_file)
-    with open(csv_file, mode="a", newline="") as file:
-        fieldnames = ["roll_no", "name", "age", "Math", "Science", "English"]
+    file_exists = os.path.exists("students.csv")
+    with open("students.csv", mode="a", newline="") as file:
+        fieldnames = ["Roll_no", "Name", "Age", "Math", "Science", "English"]
         writer = csv.DictWriter(file, fieldnames=fieldnames)
-        if not file_exists:  # If the file is new, write the header
+        if not file_exists:
             writer.writeheader()
         writer.writerow({
-            "roll_no": student["roll_no"],
-            "name": student["name"],
-            "age": student["age"],
+            "Roll_no": student["roll_no"],
+            "Name": student["name"],
+            "Age": student["age"],
             "Math": student["marks"]["Math"],
             "Science": student["marks"]["Science"],
             "English": student["marks"]["English"]
         })
 
-
-# Function to save students to CSV
 def save_students(students):
-    with open(csv_file, mode="w", newline="") as file:
-        fieldnames = ["roll_no", "name", "age", "Math", "Science", "English"]
+    with open("students.csv", mode="w", newline="") as file:
+        fieldnames = ["Roll_no", "Name", "Age", "Math", "Science", "English"]
         writer = csv.DictWriter(file, fieldnames=fieldnames)
         writer.writeheader()
         for student in students:
             writer.writerow({
-                "roll_no": student["roll_no"],
-                "name": student["name"],
-                "age": student["age"],
+                "Roll_no": student["roll_no"],
+                "Name": student["name"],
+                "Age": student["age"],
                 "Math": student["marks"]["Math"],
                 "Science": student["marks"]["Science"],
                 "English": student["marks"]["English"]
             })
 
-# Initialize student list from CSV
-students = load_students()
-
-# Function to add a new student
 def add_student(students):
     roll_no = int(input("Enter Roll Number: "))
     name = input("Enter Student Name: ")
@@ -79,10 +67,9 @@ def add_student(students):
         "marks": marks
     }
     students.append(student)
-    append_student(students)
+    append_student(student)
     print(f"Student {name} added successfully!")
 
-# Function to update student marks
 def update_marks(students, roll_no):
     for student in students:
         if student["roll_no"] == roll_no:
@@ -95,7 +82,6 @@ def update_marks(students, roll_no):
             return
     print("Student not found!")
 
-# Function to calculate the average marks of a student
 def calculate_average(students, roll_no):
     for student in students:
         if student["roll_no"] == roll_no:
@@ -105,7 +91,6 @@ def calculate_average(students, roll_no):
     print("Student not found!")
     return 0
 
-# Function to find the highest marks in a specific subject
 def highest_marks(students, subject):
     highest = -1
     top_student = None
@@ -118,7 +103,6 @@ def highest_marks(students, subject):
     else:
         print(f"No records found for subject: {subject}")
 
-# Function to display all students
 def display_students(students):
     if not students:
         print("No students to display!")
@@ -126,7 +110,8 @@ def display_students(students):
     for student in students:
         print(f"Roll No: {student['roll_no']}, Name: {student['name']}, Age: {student['age']}, Marks: {student['marks']}")
 
-# Main loop for the Student Management System
+students = load_students()
+
 while True:
     print("\nStudent Management System")
     print("1. Add Student")
