@@ -33,19 +33,28 @@ last_entry = sales_data[-1, -1, -1]
 print(f"Value of the final product entry: {last_entry}\n")
 
 
-# --- TASK 3: OPERATIONS & BROADCASTING (Topics 9, 12, 15) ---
+# --- TASK 3: OPERATIONS & BROADCASTING (Topics 9, 10, 12, 15) ---
 print("--- Task 3: Operations & Broadcasting ---")
-# Broadcasting: Adding a flat ₹10 tax to every single value [Topic 15]
-taxed_sales = sales_data + 10 
+
+# Broadcasting: Adding a flat ₹10 logistics tax to every value
+taxed_sales = sales_data + 10
 print("Applied ₹10 Logistics Tax using Broadcasting.")
 
-# Universal Function (ufunc): Calculating Square Root [Topic 10]
+# Universal Function (ufunc): Square root of sales values
 growth_curve = np.sqrt(sales_data)
+print("Calculated square root of sales values.")
 
-# Aggregation: Calculating the Running Total (Cumulative Sum) [Topic 12.3]
+# Aggregation 1: Running total across entire dataset
 running_total = np.cumsum(sales_data)
-print(f"Total sales volume achieved to date: {running_total[-1]}\n")
+print(f"Overall Running Total (3 years combined): {running_total[-1]}")
 
+# Aggregation 2: Year-wise total sales
+yearly_total = np.sum(sales_data, axis=(1,2))
+print(f"Year-wise Total Sales: {yearly_total}")
+
+# Aggregation 3: Year-wise running total
+yearly_running_total = np.cumsum(yearly_total)
+print(f"Year-wise Running Total: {yearly_running_total}")
 
 # --- TASK 4: STRUCTURAL TRANSFORMATION (Topics 7, 14) ---
 print("--- Task 4: Transformation & Joining ---")
